@@ -1,0 +1,55 @@
+#!/bin/bash
+
+## Constants
+VERSION="0.1.0"
+REPO_URL="https://github.com/thoso/yii2-rest-boilerplate.git"
+REPO_TITLE="Yii 2 REST Project Boilerplate"
+
+# Help
+function help
+{
+	echo "thoso-cli for templates - $VERSION"
+	echo ""
+	echo "Usage: $0 [destination | -v | -h]"
+	echo ""
+	echo "Options:"
+	echo "  -v [--version]     shows the current version"
+	echo "  -h [--help]        show this help"
+}
+
+# Version
+function version
+{
+	echo $VERSION
+}
+
+# Clone
+function clone
+{
+	git clone $REPO_URL $destination
+	cd $destination
+	pwd
+	rm -Rf .git
+	git init
+	git add .
+	git commit -m "Initial commit with template"
+	echo ""
+	echo "$REPO_TITLE ready in '$destination'"
+}
+
+destination=
+if [ "$1" != "" ]; then
+	case $1 in
+		-v | --version )	version
+							;;
+
+		-h | --help )		help
+							;;
+
+		* )					destination=$1
+							clone
+							;;
+	esac
+else
+	help
+fi
